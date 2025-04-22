@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Matinale pour Parents Actifs - 25 Minutes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        .routine-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .routine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            .page-break {
+                page-break-before: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-teal-50 to-blue-50">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-teal-700 mb-4">Parentalité Sereine</h1>
+            <p class="text-xl text-gray-600">Votre routine matinale de 25 minutes pour une journée équilibrée en famille</p>
+        </header>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-teal-600 mb-4 md:mb-0">Minuteur de Routine</h2>
+                <div class="flex space-x-4">
+                    <button id="startBtn" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition-colors no-print">
+                        <i class="fas fa-play mr-2"></i> Démarrer
+                    </button>
+                    <button id="pauseBtn" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors hidden no-print">
+                        <i class="fas fa-pause mr-2"></i> Pause
+                    </button>
+                    <button id="resetBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors no-print">
+                        <i class="fas fa-redo-alt mr-2"></i> Réinitialiser
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <div class="w-full bg-gray-200 rounded-full h-4">
+                    <div id="progressBar" class="bg-teal-600 h-4 rounded-full progress-bar" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between mt-2 text-sm text-gray-600">
+                    <span>0 min</span>
+                    <span>12 min</span>
+                    <span>25 min</span>
+                </div>
+            </div>
+
+            <div class="flex justify-center mb-4">
+                <div id="timer" class="text-4xl font-bold text-teal-700">25:00</div>
+            </div>
+
+            <div id="currentActivity" class="text-center text-lg font-medium text-gray-700 mb-4">
+                Prêt à commencer votre routine
+            </div>
+
+            <div class="flex justify-center space-x-4 mb-2 no-print">
+                <button id="prevStepBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i> Précédent
+                </button>
+                <button id="nextStepBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    Suivant <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="routine-container">
+            <!-- Étape 1: Moment de calme -->
+            <div id="step1" class="step active">
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                    <h2 class="text-2xl font-semibold text-teal-600 mb-4">Étape 1: Moment de calme avant le réveil des enfants (5 minutes)</h2>
+                    <p class="mb-4 text-gray-700">Profitez de ces précieux instants de tranquillité pour vous centrer et préparer votre esprit avant le tourbillon de la journée familiale.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="routine-card bg-blue-50 rounded-lg p-4 border-l-4 border-blue-400">
+                            <h3 class="font-bold text-blue-700 mb-2">Respiration consciente (2 min)</h3>
+                            <p class="text-gray-700">Commencez par un moment de respiration profonde pour calmer votre système nerveux.</p>
+                            <ol class="mt-2 list-decimal list-inside text-gray-600 text-sm">
+                                <li>Asseyez-vous confortablement, dos droit</li>
+                                <li>Inspirez profondément par le nez pendant 4 secondes</li>
+                                <li>Retenez votre souffle pendant 2 secondes</li>
+                                <li>Expirez lentement par la bouche pendant 6 secondes</li>
+                                <li>Répétez 10 fois en visualisant une journée harmonieuse</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="routine-card bg-green-50 rounded-lg p-4 border-l-4 border-green-400">
+                            <h3 class="font-bold text-green-700 mb-2">Journal de gratitude parentale (3 min)</h3>
+                            <p class="text-gray-700">Prenez quelques instants pour noter vos pensées positives sur votre famille.</p>
+                            <ol class="mt-2 list-decimal list-inside text-gray-600 text-sm">
+                                <li>Notez 3 choses que vous aimez chez chacun de vos enfants</li>
+                                <li>Identifiez un moment de joie parentale récent</li>
+                                <li>Reconnaissez une qualité que vous avez développée grâce à la parentalité</li>
+                                <li>Formulez une intention positive pour votre journée en tant que parent</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                        <h3 class="font-bold text-yellow-700 mb-2">Conseil:</h3>
+                        <p class="text-gray-700">Si vos enfants se réveillent tôt, n'hésitez pas à vous lever 30 minutes avant eux pour garantir ce moment précieux. Même 5 minutes de calme peuvent transformer complètement la qualité de votre journée et votre capacité à répondre patiemment aux besoins de votre famille.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Étape 2: Énergisation express -->
+            <div id="step2" class="step">
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                    <h2 class="text-2xl font-semibold text-teal-600 mb-4">Étape 2: Énergisation express (7 minutes)</h2>
+                    <p class="mb-4 text-gray-700">Des exercices rapides mais efficaces pour réveiller votre corps et stimuler votre énergie avant une journée bien remplie.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="routine-card bg-orange-50 rounded-lg p-4 border-l-4 border-orange-400">
+                            <h3 class="font-bold text-orange-700 mb-2">Réveil corporel complet (3 min)</h3>
+                            <p class="text-gray-700">Une séquence dynamique pour activer tous les muscles principaux.</p>
+                            <ol class="mt-2 list-decimal list-inside text-gray-600 text-sm">
+                                <li>10 jumping jacks pour élever votre rythme cardiaque</li>
+                                <li>10 squats pour activer les grandes chaînes musculaires</li>
+                                <li>10 rotations des bras en cercles complets</li>
+                                <li>10 extensions dorsales (mains aux hanches, poitrine vers l'avant)</li>
+                                <li>10 secondes de marche rapide sur place avec genoux hauts</li>
+                                <li>Répétez une fois si possible</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="routine-card bg-red-50 rounded-lg p-4 border-l-4 border-red-400">
+                            <h3 class="font-bold text-red-700 mb-2">Hydratation énergisante (2 min)</h3>
+                            <p class="text-gray-700">Préparez une boisson qui stimulera votre métabolisme et votre vitalité.</p>
+                            <ul class="mt-2 list-disc list-inside text-gray-600 text-sm">
+                                <li>1 grand verre d'eau tiède</li>
+                                <li>Le jus d'un demi-citron frais</li>
+                                <li>Une pincée de sel non raffiné (pour les électrolytes)</li>
+                                <li>Optionnel: 1/4 c. à café de curcuma et une pincée de poivre noir</li>
+                                <li>Buvez lentement en visualisant l'énergie se diffuser dans tout votre corps</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="routine-card bg-purple-50 rounded-lg p-4 border-l-4 border-purple-400 md:col-span-2">
+                            <h3 class="font-bold text-purple-700 mb-2">Douche énergisante (2 min)</h3>
+                            <p class="text-gray-700">Technique de douche contrastée pour stimuler la circulation et l'éveil.</p>
+                            <ol class="mt-2 list-decimal list-inside text-gray-600 text-sm">
+                                <li>Terminez votre douche habituelle par cette séquence revitalisante</li>
+                                <li>30 secondes d'eau tiède sur tout le corps</li>
+                                <li>10 secondes d'eau froide (aussi froide que vous pouvez supporter)</li>
+                                <li>20 secondes d'eau tiède à nouveau</li>
+                                <li>10 secondes d'eau froide</li>
+                                <li>Finissez avec 20 secondes d'eau tiède</li>
+                                <li>Séchez-vous vigoureusement avec une serviette</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                        <h3 class="font-bold text-yellow-700 mb-2">Conseil parental:</h3>
+                        <p class="text-gray-700">Si vos enfants sont déjà réveillés, transformez ces exercices en un jeu familial! Invitez-les à faire les mouvements avec vous, créant ainsi un moment de connexion tout en prenant soin de votre énergie. Ils adoreront imiter vos jumping jacks ou faire "l'arbre qui se balance" pendant vos étirements.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Étape 3: Organisation familiale -->
+            <div id="step3" class="step">
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                    <h2 class="text-2xl font-semibold text-teal-600 mb-4">Étape 3: Organisation familiale efficace (5 minutes)</h2>
+                    <p class="mb-4 text-gray-700">Une méthode structurée pour orchestrer harmonieusement la journée de toute la famille et éviter le stress des oublis et des précipitations.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="routine-card bg-blue-50 rounded-lg p-4 border-l-4 border-blue-400">
+                            <h3 class="font-bold text-blue-700 mb-2">Planification familiale (3 min)</h3>
+                            <p class="text-gray-700">Un système simple pour orchestrer les activités de toute la famille.</p>
+                            <ol class="mt-2 list-decimal list-inside text-gray-600 text-sm">
+                                <li>Consultez rapidement le calendrier familial partagé</li>
+                                <li>Identifiez les événements spéciaux de la journée (rendez-vous médicaux, activités parascolaires, etc.)</li>
+                                <li>Préparez mentalement la logistique des déplacements</li>
+                                <li>Notez les horaires clés sur un tableau visible par tous</li>
+                                <li>Envoyez des rappels si nécessaire au partenaire ou aux enfants plus âgés</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="routine-card bg-green-50 rounded-lg p-4 border-l-4 border-green-400">
+                            <h3 class="font-bold text-green-700 mb-2">Préparation des essentiels (2 min)</h3>
+                            <p class="text-gray-700">Technique de vérification rapide pour être sûr que rien n'est oublié.</p>
+                            <ul class="mt-2 list-disc list-inside text-gray-600 text-sm">
+                                <li>Vérifiez que les sacs (école, travail, sport) sont prêts et complets</li>
+                                <li>Placez les objets importants (clés, portefeuille, téléphone) dans un emplacement désigné</li>
+                                <li>Confirmez que les repas et snacks sont préparés ou planifiés</li>
+                                <li>Assurez-vous que les vêtements nécessaires sont prêts et accessibles</li>
+                                <li>Vérifiez rapidement que les appareils essentiels sont chargés</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="routine-card bg-indigo-50 rounded-lg p-4 border-l-4 border-indigo-400 md:col-span-2">
+                            <h3 class="font-bold text-indigo-700 mb-2">Système des 3 priorités (1 min)</h3>
+                            <p class="text-gray-700">Identifiez clairement les tâches familiales les plus importantes pour aujourd'hui.</p>
+                            <ol class="mt-2 list-decimal list-inside text-gray-600">
+                                <li>Choisissez <strong>une priorité pour la famille</strong> (ex: prendre un moment de qualité ensemble ce soir)</li>
+                                <li>Identifiez <strong>une priorité pour les enfants</strong> (ex: aider votre fille à finaliser son projet d'art)</li>
+                                <li>Définissez <strong>une priorité pour vous</strong> en tant que personne (ex: appeler ce médecin pour prendre rendez-vous)</li>
+                                <li>Notez ces 3 priorités sur un post-it ou dans votre application de notes</li>
+                                <li>Engagez-vous à les accomplir quoi qu'il arrive</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                        <h3 class="font-bold text-yellow-700 mb-2">Conseil d'organisation:</h3>
+                        <p class="text-gray-700">Créez une "station de commande" familiale près de l'entrée avec un calendrier, des crochets pour les sacs, un bol pour les clés et un tableau pour les messages importants. Cette centralisation réduit considérablement le temps perdu à chercher les objets essentiels et permet à tous les membres de la famille de visualiser facilement le programme de la journée.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Étape 4: Préparation mentale -->
+            <div id="step4" class="step">
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                    <h2 class="text-2xl font-semibold text-teal-600 mb-4">Étape 4: Préparation mentale "mode parent zen" (8 minutes)</h2>
+                    <p class="mb-4 text-gray-700">Des techniques puissantes pour renforcer votre résilience parentale et cultiver une présence bienveillante tout au long de la journée.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="routine-card bg-teal-50 rounded-lg p-4 border-l-4 border-teal-400">
+                            <h3 class="font-bold text-teal-700 mb-2">Visualisation positive (3 min)</h3>
+                            <p class="text-gray-700">Préparez votre esprit à réagir calmement aux défis parentaux typiques.</p>
+                            <ol class="mt-2 list-decimal list-inside text-gray-600 text-sm">
+                                <li>Fermez les yeux et prenez trois respirations profondes</li>
+                                <li>Imaginez une situation habituellement stressante avec vos enfants (matin pressé, crise, refus de coopérer)</li>
+                                <li>Visualisez-vous y répondant avec calme, patience et créativité</li>
+                                <li>Observez les expressions détendues de vos enfants dans ce scénario</li>
+                                <li>Ressentez la satisfaction et la connexion qui en résultent</li>
+                                <li>Répétez avec 1-2 autres scénarios potentiellement difficiles</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="routine-card bg-purple-50 rounded-lg p-4 border-l-4 border-purple-400">
+                            <h3 class="font-bold text-purple-700 mb-2">Ancrage parental (3 min)</h3>
+                            <p class="text-gray-700">Créez un état émotionnel ressource pour les moments de tension.</p>
+                            <ol class="mt-2 list-decimal list-inside text-gray-600 text-sm">
+                                <li>Rappelez-vous un moment où vous vous êtes senti comme un parent extraordinaire</li>
+                                <li>Revivez pleinement cette expérience avec tous vos sens</li>
+                                <li>Notez les sensations physiques positives dans votre corps</li>
+                                <li>Au sommet de cette émotion positive, créez un ancrage physique (ex: pouce et index se touchant)</li>
+                                <li>Respirez profondément et dites votre mantra parental (voir ci-dessous)</li>
+                                <li>Répétez 3 fois pour renforcer cette association</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="routine-card bg-pink-50 rounded-lg p-4 border-l-4 border-pink-400 md:col-span-2">
+                            <h3 class="font-bold text-pink-700 mb-2">Mantra parental et intentions (2 min)</h3>
+                            <p class="text-gray-700">Choisissez des phrases puissantes qui guideront votre parentalité aujourd'hui.</p>
+                            <div class="mt-2 text-gray-600">
+                                <p class="mb-2"><strong>Choisissez un mantra parental</strong> parmi ces exemples ou créez le vôtre:</p>
+                                <ul class="list-disc list-inside mb-3 text-sm">
+                                    <li>"Je respire l'amour, j'expire la patience"</li>
+                                    <li>"Je suis le calme dans leur tempête"</li>
+                                    <li>"Connexion avant correction"</li>
+                                    <li>"Ce moment aussi passera"</li>
+                                    <li>"Je choisis consciemment ma réponse"</li>
+                                </ul>
+                                <p class="mb-2"><strong>Définissez trois intentions parentales</strong> pour aujourd'hui:</p>
+                                <ol class="list-decimal list-inside text-sm">
+                                    <li>Une intention sur votre présence (ex: être pleinement présent pendant 10 minutes avec chaque enfant)</li>
+                                    <li>Une intention sur votre communication (ex: utiliser une voix calme même pendant les moments de stress)</li>
+                                    <li>Une intention sur votre bien-être (ex: prendre au moins une pause de 5 minutes pour moi)</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                        <h3 class="font-bold text-yellow-700 mb-2">Conseil parental avancé:</h3>
+                        <p class="text-gray-700">Les enfants sont extrêmement sensibles à notre état émotionnel. Ces 8 minutes d'alignement mental peuvent littéralement transformer l'atmosphère de toute votre journée familiale. Si vous sentez votre calme s'évaporer pendant la journée, prenez 30 secondes pour utiliser votre ancrage parental et répéter votre mantra. Cette micro-pause peut éviter des heures de tension familiale.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conclusion -->
+            <div id="conclusion" class="step">
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                    <h2 class="text-2xl font-semibold text-teal-600 mb-4">Félicitations !</h2>
+                    <p class="mb-4 text-gray-700">Vous avez terminé votre routine matinale de 25 minutes pour parents actifs. Vous êtes maintenant prêt(e) à aborder cette journée avec calme, énergie et organisation.</p>
+                    
+                    <div class="p-5 bg-teal-50 rounded-lg border-l-4 border-teal-400 mb-6">
+                        <h3 class="font-bold text-teal-700 mb-2">Bénéfices de cette routine:</h3>
+                        <ul class="list-disc list-inside text-gray-600 space-y-2">
+                            <li>Vous avez créé un espace de calme pour vous-même avant de donner aux autres</li>
+                            <li>Votre corps est énergisé et prêt à faire face aux exigences physiques de la parentalité</li>
+                            <li>Les aspects logistiques de votre journée sont organisés et clairs</li>
+                            <li>Votre esprit est préparé à réagir avec sérénité face aux défis parentaux</li>
+                            <li>Vous avez défini des intentions claires pour guider vos interactions familiales</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="p-5 bg-indigo-50 rounded-lg border-l-4 border-indigo-400 mb-6">
+                        <h3 class="font-bold text-indigo-700 mb-2">Pour prolonger les bienfaits:</h3>
+                        <ul class="list-disc list-inside text-gray-600 space-y-2">
+                            <li>Prenez 30 secondes plusieurs fois dans la journée pour vous reconnecter à votre mantra parental</li>
+                            <li>Utilisez votre ancrage dans les moments de tension avec les enfants</li>
+                            <li>Consultez vos 3 priorités à midi pour rester focalisé(e)</li>
+                            <li>Célébrez les petites victoires parentales en fin de journée</li>
+                            <li>Partagez cette routine avec votre partenaire pour une approche familiale cohérente</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button id="restartBtn" class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg transition-colors text-lg no-print">
+                            <i class="fas fa-redo mr-2"></i> Recommencer la routine
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center py-6 text-gray-600">
+            <p class="text-sm mb-2">© 2023 Ai-Me | Au Pays de Marie</p>
+            <p class="text-xs">Prenez soin de vous pour mieux prendre soin des autres.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Éléments DOM
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const prevStepBtn = document.getElementById('prevStepBtn');
+        const nextStepBtn = document.getElementById('nextStepBtn');
+        const timerEl = document.getElementById('timer');
+        const progressBar = document.getElementById('progressBar');
+        const currentActivity = document.getElementById('currentActivity');
+        
+        // Étapes de la routine
+        const steps = [
+            document.getElementById('step1'),
+            document.getElementById('step2'),
+            document.getElementById('step3'),
+            document.getElementById('step4'),
+            document.getElementById('conclusion')
+        ];
+        
+        // Configuration du temps
+        const totalTime = 25 * 60; // 25 minutes en secondes
+        const stepTimes = [5 * 60, 7 * 60, 5 * 60, 8 * 60]; // Temps par étape en secondes
+        let remainingTime = totalTime;
+        let timerInterval;
+        let isRunning = false;
+        let currentStep = 0;
+        
+        // Fonctions
+        function updateTimerDisplay(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        function updateProgressBar() {
+            const progress = 100 - (remainingTime / totalTime * 100);
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        function updateCurrentStep() {
+            let elapsedTime = totalTime - remainingTime;
+            let stepTime = 0;
+            
+            for (let i = 0; i < stepTimes.length; i++) {
+                stepTime += stepTimes[i];
+                if (elapsedTime < stepTime) {
+                    if (currentStep !== i) {
+                        currentStep = i;
+                        showStep(currentStep);
+                    }
+                    return;
+                }
+            }
+            
+            if (currentStep !== 4) {
+                currentStep = 4;
+                showStep(currentStep);
+            }
+        }
+        
+        function showStep(stepIndex) {
+            steps.forEach((step, index) => {
+                if (index === stepIndex) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+            
+            // Mettre à jour le texte de l'activité en cours
+            switch(stepIndex) {
+                case 0:
+                    currentActivity.textContent = "Moment de calme: Centrez-vous avant que la journée ne commence";
+                    break;
+                case 1:
+                    currentActivity.textContent = "Énergisation: Réveillez votre corps pour une journée active";
+                    break;
+                case 2:
+                    currentActivity.textContent = "Organisation: Structurez efficacement la journée familiale";
+                    break;
+                case 3:
+                    currentActivity.textContent = "Mode parent zen: Préparez-vous mentalement à être présent(e) et patient(e)";
+                    break;
+                case 4:
+                    currentActivity.textContent = "Félicitations ! Vous êtes prêt(e) pour une journée parentale équilibrée";
+                    stopTimer();
+                    break;
+            }
+
+            // Ajuster les boutons de navigation
+            prevStepBtn.disabled = stepIndex === 0;
+            prevStepBtn.classList.toggle('opacity-50', stepIndex === 0);
+            nextStepBtn.disabled = stepIndex === 4;
+            nextStepBtn.classList.toggle('opacity-50', stepIndex === 4);
+        }
+        
+        function startTimer() {
+            if (isRunning) return;
+            
+            isRunning = true;
+            startBtn.classList.add('hidden');
+            pauseBtn.classList.remove('hidden');
+            
+            timerInterval = setInterval(() => {
+                if (remainingTime > 0) {
+                    remainingTime--;
+                    updateTimerDisplay(remainingTime);
+                    updateProgressBar();
+                    updateCurrentStep();
+                } else {
+                    stopTimer();
+                    showStep(4); // Afficher la conclusion
+                }
+            }, 1000);
+        }
+        
+        function pauseTimer() {
+            if (!isRunning) return;
+            
+            isRunning = false;
+            clearInterval(timerInterval);
+            startBtn.classList.remove('hidden');
+            pauseBtn.classList.add('hidden');
+        }
+        
+        function stopTimer() {
+            pauseTimer();
+            startBtn.classList.add('hidden');
+        }
+        
+        function resetTimer() {
+            pauseTimer();
+            remainingTime = totalTime;
+            updateTimerDisplay(remainingTime);
+            progressBar.style.width = '0%';
+            currentStep = 0;
+            showStep(currentStep);
+            currentActivity.textContent = "Prêt à commencer votre routine";
+            startBtn.classList.remove('hidden');
+        }
+
+        function goToNextStep() {
+            if (currentStep < 4) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function goToPrevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+        
+        // Écouteurs d'événements
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        restartBtn.addEventListener('click', resetTimer);
+        nextStepBtn.addEventListener('click', goToNextStep);
+        prevStepBtn.addEventListener('click', goToPrevStep);
+        
+        // Initialisation
+        updateTimerDisplay(remainingTime);
+        showStep(0); // S'assurer que les boutons sont correctement configurés
+    </script>
+</body>
+</html>
